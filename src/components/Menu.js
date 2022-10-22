@@ -1,70 +1,54 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
   Card,
   CardImg,
   CardImgOverlay,
-  CardText,
-  CardBody,
   CardTitle,
+  Breadcrumb,
+  BreadcrumbItem,
 } from 'reactstrap'
+import { Link } from 'react-router-dom'
 
-class Menu extends Component {
-  constructor(props) {
-    super(props)
+function RenderMenuItem({ dish, onClick }) {
+  return (
+    <Card>
+      <Link to={`/menu/${dish.id}`}>
+        <CardImg width="100%" src={dish.image} alt={dish.name} />
 
-    this.state = {
-      selectDish: null,
-    }
-  }
-
-  onDishSelect(dish) {
-    this.setState({ selectedDish: dish })
-  }
-
-  renderDish(dish) {
-    const component = dish ? (
-      <Card>
-        <CardImg top src={dish.image} alt={dish.name} />
-
-        <CardBody>
+        <CardImgOverlay>
           <CardTitle>{dish.name}</CardTitle>
+        </CardImgOverlay>
+      </Link>
+    </Card>
+  )
+}
 
-          <CardText>{dish.description}</CardText>
-        </CardBody>
-      </Card>
-    ) : (
-      <div></div>
-    )
-    return component
-  }
-
-  render() {
-    const menu = this.props.dishes.map(dish => {
-      const { id, name, image } = dish
-      return (
-        <div className="col-12 col-md-5 m-1">
-          <Card key={id} onClick={() => this.onDishSelect(dish)}>
-            <CardImg width="100%" src={image} alt={name} />
-            <CardImgOverlay>
-              <CardTitle>{name}</CardTitle>
-            </CardImgOverlay>
-          </Card>
-        </div>
-      )
-    })
-
+const Menu = props => {
+  const menu = props.dishes.map(dish => {
     return (
-      <div className="container">
-        <div className="row">{menu}</div>
-
-        <div className="row">
-          <div className="col-12 col-md-5 m-1">
-            {this.renderDish(this.state.selectedDish)}
-          </div>
-        </div>
+      <div className="col-12 col-md-5 m-1" key={dish.id}>
+        <RenderMenuItem dish={dish} onClick={props.onClick} />
       </div>
     )
-  }
+  })
+
+  return (
+    <div className="container">
+      <div className="row">
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to="/home">Home</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem active>Menu</BreadcrumbItem>
+        </Breadcrumb>
+        <div className="col-12">
+          <h3>Menu</h3>
+          <hr />
+        </div>
+      </div>
+      <div className="row">{menu}</div>
+    </div>
+  )
 }
 
 export default Menu
