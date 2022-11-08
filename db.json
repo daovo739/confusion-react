@@ -1,0 +1,41 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "feedbacks": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "avbc@gmail.com",
+      "phone": "1234567890"
+    },
+    {
+      "id": 1,
+      "firstName": "võ s",
+      "lastName": "đạo",
+      "phone": "123",
+      "email": "23@gmil.com"
+    },
+    {
+      "id": "92201289-54e0-4ee1-b9a5-47238766c82d",
+      "firstName": "dao ",
+      "lastName": "vos",
+      "phone": "1234",
+      "email": "da@gm.com"
+    }
+  ]
+}

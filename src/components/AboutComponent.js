@@ -8,26 +8,33 @@ import {
   Media,
 } from 'reactstrap'
 import { Link } from 'react-router-dom'
+import { FadeTransform, Fade, Stagger } from 'react-animation-components'
+import { Loading } from './LoadingComponent'
 
 function About(props) {
   const RenderLeader = ({ leader }) => {
     return (
-      <Media key={leader.id} className="row">
-        <Media left className="col-2">
-          <Media object src={leader.image} alt={leader.name} />
+      <FadeTransform
+        in
+        transformProps={{
+          exitTransform: 'scale(0.5) translateY(-50%)',
+        }}
+      >
+        <Media key={leader.id} className="row">
+          <Media left className="col-2">
+            <Media object src={leader.image} alt={leader.name} />
+          </Media>
+          <Media body className="col-10">
+            <Media heading>{leader.name}</Media>
+            <p>{leader.designation}</p>
+            <p>{leader.description}</p>
+          </Media>
         </Media>
-        <Media body className="col-10">
-          <Media heading>{leader.name}</Media>
-          <p>{leader.designation}</p>
-          <p>{leader.description}</p>
-        </Media>
-      </Media>
+      </FadeTransform>
     )
   }
 
-  const leaders = props.leaders.map(leader => {
-    return <RenderLeader leader={leader} />
-  })
+  // const leaders = )
 
   return (
     <div className="container">
@@ -105,7 +112,22 @@ function About(props) {
           <h2>Corporate Leadership</h2>
         </div>
         <div className="col-12">
-          <Media list>{leaders}</Media>
+          {!props.leadersLoading ? (
+            <Media list>
+              {props.leaders.map((leader, index) => {
+                return (
+                  <RenderLeader
+                    key={index}
+                    leader={leader}
+                    isLoading={props.leadersLoading}
+                    errMess={props.leadersErrMess}
+                  />
+                )
+              })}
+            </Media>
+          ) : (
+            <Loading />
+          )}
         </div>
       </div>
     </div>
